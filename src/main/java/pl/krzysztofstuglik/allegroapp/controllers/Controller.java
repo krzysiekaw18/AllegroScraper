@@ -11,9 +11,8 @@ import javafx.scene.control.TextField;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import pl.krzysztofstuglik.allegroapp.services.SmsService;
 
-
-import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -36,10 +35,14 @@ public class Controller implements Initializable {
     Label labelState;
 
     @FXML
+    Label labelAuction;
+
+    @FXML
     ProgressIndicator progressBar;
 
     private double lastPriceValue;
     private ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+    SmsService smsService = new SmsService();
 
     public void initialize(URL location, ResourceBundle resources) {
         progressBar.setVisible(false);
@@ -48,14 +51,16 @@ public class Controller implements Initializable {
         });
     }
 
-    private void setData(double price, String status) {
+    private void setData(double price, String status, String auction) {
         Platform.runLater(() -> {
             progressBar.setVisible(false);
             labelPrice.setVisible(true);
             labelState.setVisible(true);
+            labelAuction.setVisible(true);
 
             labelPrice.setText(String.valueOf(price));
             labelState.setText(status);
+            labelAuction.setText(auction);
         });
     }
 
@@ -63,22 +68,24 @@ public class Controller implements Initializable {
         progressBar.setVisible(true);
         labelPrice.setVisible(true);
         labelState.setVisible(true);
+        labelAuction.setVisible(true);
         scheduledExecutorService.scheduleAtFixedRate(() -> {
             try {
                 double price = getPrice(url);
                 String status = getState(url);
+                String auction = getAuction(url);
 
                 if (lastPriceValue != price) {
-                    JOptionPane.showMessageDialog(null, "Cena uległa zmianie");
+                    smsService.sendSms("xxxxxxxx", "Cena licytowanego przedmiotu (" + auction +") wzrosła do " + price + " zł.");
                     lastPriceValue = price;
                 } else {
                     System.out.println("Cene nie uległa zmianie");
                 }
-                setData(price, status);
+                setData(price, status, auction);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }, 0, 10, TimeUnit.SECONDS);
+        }, 0, 5, TimeUnit.SECONDS);
     }
 
     private double getPrice(String url) throws IOException {
@@ -94,4 +101,12 @@ public class Controller implements Initializable {
         String text = state.text();
         return String.valueOf(text);
     }
+
+    private String getAuction(String url) throws IOException {
+        Document doc = Jsoup.connect(url).get();
+        Element auction = doc.selectFirst(".si-title");
+        String text = auction.text();
+        return String.valueOf(text);
+    }
+
 }

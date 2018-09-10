@@ -4,27 +4,36 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Bloom?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.krzysztofstuglik.allegroapp.controllers.Controller">
    <children>
-      <TextField fx:id="fieldUrl" layoutX="67.0" layoutY="43.0" prefHeight="25.0" prefWidth="470.0" />
+      <TextField fx:id="fieldUrl" alignment="CENTER" layoutX="67.0" layoutY="43.0" prefHeight="25.0" prefWidth="470.0" text="Tutaj wklej link do aukcji" />
       <Button fx:id="buttonShowPrice" layoutX="355.0" layoutY="89.0" mnemonicParsing="false" text="Pokaż mi cenę" textAlignment="CENTER">
          <font>
             <Font name="System Italic" size="24.0" />
          </font>
       </Button>
-      <Label fx:id="labelPrice" alignment="CENTER" layoutY="248.0" prefHeight="105.0" prefWidth="600.0" text="0.0 PLN" textAlignment="CENTER" textFill="#e10909">
+      <Label fx:id="labelPrice" alignment="CENTER" layoutY="321.0" prefHeight="105.0" prefWidth="600.0" text="0.0 PLN" textAlignment="CENTER" textFill="#e10909">
          <font>
-            <Font name="Arial" size="72.0" />
+            <Font name="Arial" size="48.0" />
          </font>
       </Label>
-      <Label fx:id="labelState" alignment="CENTER" layoutX="2.0" layoutY="353.0" prefHeight="35.0" prefWidth="600.0" text="Stan" textFill="#530cc6">
+      <Label fx:id="labelState" alignment="CENTER" layoutY="439.0" prefHeight="53.0" prefWidth="600.0" text="Stan" textFill="#6376ab">
          <font>
-            <Font size="62.0" />
+            <Font size="36.0" />
          </font>
       </Label>
-      <ProgressIndicator fx:id="progressBar" layoutX="77.0" layoutY="196.0" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="313.0" prefWidth="446.0" />
+      <ProgressIndicator fx:id="progressBar" layoutX="79.0" layoutY="231.0" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="313.0" prefWidth="446.0" />
+      <Label fx:id="labelAuction" alignment="CENTER" layoutX="6.0" layoutY="140.0" prefHeight="181.0" prefWidth="592.0" text="Licytowany przedmiot" textAlignment="CENTER" textFill="#23e10e" wrapText="true">
+         <font>
+            <Font size="36.0" />
+         </font>
+         <effect>
+            <Bloom threshold="1.0" />
+         </effect>
+      </Label>
    </children>
 </AnchorPane>
