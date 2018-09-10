@@ -10,4 +10,4 @@ Application checks the price of the item every ten seconds and then display an a
 This application was created using:
 1. JavaFx
 2. Scheduling tasks
-3. Jsoup dependency
+3. Jsoup dependency 
